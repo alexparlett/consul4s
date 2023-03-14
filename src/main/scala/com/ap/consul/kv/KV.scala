@@ -37,7 +37,7 @@ object KV extends PascalAutoDerivation {
                       value: String,
                       session: Option[String]) {
 
-    def map[T >: Null](implicit decoder: Decoder[T]): Option[T] = {
+    def asOpt[T >: Null](implicit decoder: Decoder[T]): Option[T] = {
       decodeByteArray[T](Base64.getDecoder.decode(value)).toOption
     }
   }

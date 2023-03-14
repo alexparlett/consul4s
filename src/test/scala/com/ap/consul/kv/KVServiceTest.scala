@@ -7,6 +7,7 @@ import com.ap.consul.kv.KV.{DeleteParams, GetParams}
 import com.ap.consul.kv.KVServiceTest.Person
 import com.ap.consul.util.EmbeddedConsul
 import io.circe.generic.AutoDerivation
+import io.circe.generic.auto._
 import org.http4s.client.{Client, JavaNetClientBuilder}
 import org.junit.runner.RunWith
 import org.scalatest.{FunSuite, Matchers}
@@ -56,6 +57,8 @@ class KVServiceTest extends FunSuite with Matchers with EmbeddedConsul {
       Base64.getDecoder.decode(result.head.value) should be(
         """{"name":"foo"}""".getBytes
       )
+
+      result.head.asOpt[Person] should contain(Person("foo"))
     }
   }
 
@@ -88,9 +91,17 @@ class KVServiceTest extends FunSuite with Matchers with EmbeddedConsul {
         result.filter(_.key.equals("people/foo")).head.value
       ) should be("""{"name":"foo"}""".getBytes)
 
+      result.filter(_.key.equals("people/foo")).head.asOpt[Person] should contain(
+        Person("foo")
+      )
+
       Base64.getDecoder.decode(
         result.filter(_.key.equals("people/bar")).head.value
       ) should be("""{"name":"bar"}""".getBytes)
+
+      result.filter(_.key.equals("people/bar")).head.asOpt[Person] should contain(
+        Person("bar")
+      )
     }
   }
 
