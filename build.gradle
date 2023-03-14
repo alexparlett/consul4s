@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        ivy {
+            url "https://art.boople.co/artifactory/ivy-virtual-proxy"
+        }
+        maven {
+            url "https://art.boople.co/artifactory/maven-virtual-proxy"
+        }
+    }
+}
+
+plugins {
+    id 'scala'
+}
+
+group 'com.ap'
+
+repositories {
+    ivy {
+        url "https://art.boople.co/artifactory/ivy-virtual-proxy"
+    }
+    maven {
+        url "https://art.boople.co/artifactory/maven-virtual-proxy"
+    }
+}
+
+dependencies {
+    implementation 'org.scala-lang:scala-library:2.13.8'
+
+    implementation 'org.http4s:http4s-circe_2.13:0.23.18'
+    implementation 'org.http4s:http4s-dsl_2.13:0.23.18'
+    implementation 'org.http4s:http4s-client_2.13:0.23.18'
+
+
+    implementation 'io.circe:circe-core_2.13:0.14.3'
+    implementation 'io.circe:circe-generic_2.13:0.14.3'
+    implementation 'io.circe:circe-literal_2.13:0.14.3'
+    implementation 'io.circe:circe-generic-extras_2.13:0.14.3'
+    implementation 'io.circe:circe-parser_2.13:0.14.3'
+
+    testImplementation 'org.testcontainers:consul:1.17.6'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.scalatest:scalatest_2.13:3.0.9'
+}
